@@ -1,0 +1,10 @@
+{% if sell_list %}
+    <ul>
+        {% for sell in sell_list %}
+        <li><a href="/joonggo/{{ sell.id }}/">{{ sell.subject }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+
+{% endif %}
