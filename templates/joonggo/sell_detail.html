@@ -1,5 +1,55 @@
-<h1>{{ sell.subject}}</h1>
+{% extends 'base.html' %}
 
-<div>
-    {{ sell.content }}
-</div>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+
+{% block content %}
+
+  <div class="container my-3">
+    <h2>{{ sell.subject}}</h2>
+    <div class="card my-3">
+      <div class="card-body">
+        <div class="card-text" style="white-space: pre-line;">{{ sell.content }}</div>
+        <div class="d-flex justify-content-end">
+          <div class="badge badge-light p-2">
+            {{ sell.create_date|date:"Y-m-d H:i" }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h5 class="border-bottom my-3 py-2">{{ sell.comment_set.count }}
+      개의 댓글이 있습니다.</h5>
+
+    {% for comment in sell.comment_set.all %}
+      <div class="card my-3">
+        <div class="card-body">
+          <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
+          <div class="d-flex justify-content-end">
+            <div class="badge badge-light p-2">
+              {{ comment.create_date|date:"Y-m-d H:i" }}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+    <!-- 댓글 달면 댓글을 단 username이 나와야겠음. -->
+    <form action="{% url 'joonggo:comment_create' sell.id %}" method="post" class="my-3">
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+          {% for field in form %}
+            {% if field.errors %}
+              <strong>{{field.label}}</strong>{{ field.errors }}
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      <div class="form-group">
+        <textarea name="content" id="content" class="form-control" rows="5"></textarea>
+      </div>
+      <input type="submit" value="댓글등록" class="btn btn-primary">
+    </form>
+  </div>
+{% endblock content %}

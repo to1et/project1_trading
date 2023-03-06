@@ -9,3 +9,8 @@ class Sell(models.Model):
 
     def __str__(self):
         return self.subject
+    
+class Comment(models.Model):
+    content = models.TextField()
+    create_date = models.DateTimeField()
+    sell = models.ForeignKey(Sell, null=True, blank=True, on_delete=models.CASCADE)

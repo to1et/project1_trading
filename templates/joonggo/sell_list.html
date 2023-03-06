@@ -1,10 +1,95 @@
-{% if sell_list %}
-    <ul>
-        {% for sell in sell_list %}
-        <li><a href="/joonggo/{{ sell.id }}/">{{ sell.subject }}</a></li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>질문이 없습니다.</p>
+{% extends 'base.html' %}
 
-{% endif %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+
+{% block content %}
+
+  <div class="container my-3">
+    <table class="table">
+      <thead>
+        <tr class="thead-dark">
+          <th>번호</th>
+          <th>제목</th>
+          <th>작성일시</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% if sell_list %}
+          {% for sell in sell_list %}
+            <tr>
+              <td>{{ sell.id }}</td>
+              <td>
+                <a href="{% url 'joonggo:detail' sell.id %}">{{ sell.subject }}</a>
+                {% if sell.comment_set.count > 0 %}
+                <span class="small ml-2">
+                  <i class="fa-solid fa-comment"></i> {{ sell.comment_set.count }}
+                </span>
+                {% endif %}
+              </td>
+              <td>{{ sell.create_date|date:"Y-m-d H:i" }}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <p>질문이 없습니다.</p>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+    <ul class="pagination justify-content-center">
+      {% if sell_list.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1"><i class="fa-solid fa-angles-left"></i></a>
+      </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ sell_list.previous_page_number }}"><i class="fa-solid fa-chevron-left"></i></a>
+        </li>
+      {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="?page=1"><i class="fa-solid fa-angles-left"></i></a>
+      </li>
+        <li class="page-item disabled">
+          <a class="page-link" tabindex='-1' aria-disabled="true" href="#"><i class="fa-solid fa-chevron-left"></i></a>
+        </li>
+      {% endif %}
+
+      {% for page_number in sell_list.paginator.page_range %}
+        {% if page_number >= sell_list.number|add:-3 and page_number <= sell_list.number|add:3 %}
+          {% if page_number == sell_list.number %}
+            <li class="page-item active" aria-current="page">
+              <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+          {% endif %}
+        {% endif %}
+      
+      {% endfor %}
+      {% if sell_list.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ sell_list.next_page_number }}"><i class="fa-solid fa-chevron-right"></i></a>
+        </li>
+        <li class="page-item">
+          <a href="?page={{ sell_list.paginator.num_pages }}" class="page-link">
+            <i class="fa-solid fa-angles-right"></i>
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex='-1' aria-disabled="true" href="#"><i class="fa-solid fa-chevron-right"></i></a>
+        </li>
+        <li class="page-item disabled">
+          <a href="?page={{ sell_list.paginator.num_pages }}" class="page-link">
+            <i class="fa-solid fa-angles-right"></i>
+          </a>
+        </li>
+      {% endif %}
+
+    </ul>
+    <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary">글 작성</a>
+  </div>
+{% endblock content %}
