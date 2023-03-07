@@ -20,4 +20,6 @@ from joonggo import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("joonggo/", include('joonggo.urls')),
+    path('common/', include('common.urls')),
+    path('', views.index, name='index'),
 ]
