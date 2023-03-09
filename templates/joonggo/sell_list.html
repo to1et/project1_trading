@@ -5,91 +5,183 @@
 
 {% block content %}
 
-  <div class="container my-3">
+<div class="row ml-5 my-3">
+  <div class="col-2">
+    <div class='card'>
+      <div class="card-body">
+        {% if user.is_authenticated %}
+        <div>회원정보</div>
+        <img class="avatar" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg"> {{ user.username }}
+        <div>
+        <a href="#">내가 쓴 글 보기</a>
+        </div>
+        <div>
+        <a href="#">좋아요 한 글 보기</a>
+        </div>
+        {% else %}
+        <div>
+        회원정보
+        </div>
+        <a style="font-size:14px;" class="nav-link" href="{% url 'common:login' %}">로그인이 필요합니다.</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-8 mr-3">
     <table class="table">
       <thead>
         <tr class="thead-dark">
           <th>번호</th>
+          <th>좋아요</th>
           <th>제목</th>
+          <th>작성자</th>
           <th>작성일시</th>
         </tr>
       </thead>
+      
 
       <tbody>
-        {% if sell_list %}
-          {% for sell in sell_list %}
-            <tr>
-              <td>{{ sell.id }}</td>
-              <td>
-                <a href="{% url 'joonggo:detail' sell.id %}">{{ sell.subject }}</a>
-                {% if sell.comment_set.count > 0 %}
-                <span class="small ml-2">
-                  <i class="fa-solid fa-comment"></i> {{ sell.comment_set.count }}
-                </span>
+        {% comment %} {% if sell_list %}
+        {% for sell in sell_list %} {% endcomment %}
+
+        <!-- 게시판 카드형식 만들기 -->
+        <div class="container">
+          <div class="row">
+            {% if sell_list %}
+            {% for sell in sell_list %}
+            <div class="col-3">
+              <div class="card" style="margin: 3px;">
+                <img class="sellpic" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg">
+                <div class="card-body">
+                  <a style="color:black;" href="{% url 'joonggo:detail' sell.id %}">{{ sell.subject }}</a>
+                  <p class="card-text">가격</p>
+                  <p class="small"><img class="avatar" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg"> {{ sell.author.username }}
+                    {% if sell.voter.all.count >= 0 %}
+                      좋아요<span class="text-danger px-2 py-1">
+                    {% if user in sell.voter.all %}
+                    <i class="fa-solid fa-heart"></i>
+                    {% else %}
+                    <i class="fa-regular fa-heart"></i>
+                    {% endif %}
+                  </span>
                 {% endif %}
-              </td>
-              <td>{{ sell.create_date|date:"Y-m-d H:i" }}</td>
-            </tr>
-          {% endfor %}
+                  </p>
+                  
+                </div>
+              </div>
+            </div>
+            
+            {% endfor %}
+            {% endif %}
+            
+
+          </div>
+        </div>
+
+
+
+        <!-- 기존 게시판 시작 -->
+        {% comment %} <tr>
+          <td>{{ sell.id }}</td>
+          <td>
+            {% if sell.voter.all.count >= 0 %}
+              <span class="text-danger px-2 py-1">
+                {% if user in sell.voter.all %}
+                <i class="fa-solid fa-heart"></i>
+                {% else %}
+                <i class="fa-regular fa-heart"></i>
+                {% endif %}
+              </span>
+            {% endif %}
+            
+          </td>
+          <td>
+            <a href="{% url 'joonggo:detail' sell.id %}">{{ sell.subject }}</a>
+            {% if sell.comment_set.count > 0 %}
+            <span class="small ml-2">
+              <i class="fa-solid fa-comment"></i>
+              {{ sell.comment_set.count }}
+            </span>
+            {% endif %}
+          </td>
+          <td>{{ sell.author.username }}</td>
+          <td>{{ sell.create_date|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% endfor %}
         {% else %}
-          <tr>
-            <p>질문이 없습니다.</p>
-          </tr>
-        {% endif %}
+        <tr>
+          <p>질문이 없습니다.</p>
+        </tr>
+        {% endif %} {% endcomment %}
       </tbody>
     </table>
     <ul class="pagination justify-content-center">
       {% if sell_list.has_previous %}
       <li class="page-item">
-        <a class="page-link" href="?page=1"><i class="fa-solid fa-angles-left"></i></a>
+        <a class="page-link" href="?page=1">
+          <i class="fa-solid fa-angles-left"></i>
+        </a>
       </li>
-        <li class="page-item">
-          <a class="page-link" href="?page={{ sell_list.previous_page_number }}"><i class="fa-solid fa-chevron-left"></i></a>
-        </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ sell_list.previous_page_number }}">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+      </li>
       {% else %}
       <li class="page-item disabled">
-        <a class="page-link" href="?page=1"><i class="fa-solid fa-angles-left"></i></a>
+        <a class="page-link" href="?page=1">
+          <i class="fa-solid fa-angles-left"></i>
+        </a>
       </li>
-        <li class="page-item disabled">
-          <a class="page-link" tabindex='-1' aria-disabled="true" href="#"><i class="fa-solid fa-chevron-left"></i></a>
-        </li>
+      <li class="page-item disabled">
+        <a class="page-link" tabindex='-1' aria-disabled="true" href="#">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+      </li>
       {% endif %}
-
+      
       {% for page_number in sell_list.paginator.page_range %}
-        {% if page_number >= sell_list.number|add:-3 and page_number <= sell_list.number|add:3 %}
-          {% if page_number == sell_list.number %}
-            <li class="page-item active" aria-current="page">
-              <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-            </li>
-          {% else %}
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-            </li>
-          {% endif %}
-        {% endif %}
+      {% if page_number >= sell_list.number|add:-3 and page_number <= sell_list.number|add:3 %}
+      {% if page_number == sell_list.number %}
+      <li class="page-item active" aria-current="page">
+        <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+      </li>
+      {% endif %}
+      {% endif %}
       
       {% endfor %}
       {% if sell_list.has_next %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ sell_list.next_page_number }}"><i class="fa-solid fa-chevron-right"></i></a>
-        </li>
-        <li class="page-item">
-          <a href="?page={{ sell_list.paginator.num_pages }}" class="page-link">
-            <i class="fa-solid fa-angles-right"></i>
-          </a>
-        </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ sell_list.next_page_number }}">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <a href="?page={{ sell_list.paginator.num_pages }}" class="page-link">
+          <i class="fa-solid fa-angles-right"></i>
+        </a>
+      </li>
       {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" tabindex='-1' aria-disabled="true" href="#"><i class="fa-solid fa-chevron-right"></i></a>
-        </li>
-        <li class="page-item disabled">
-          <a href="?page={{ sell_list.paginator.num_pages }}" class="page-link">
-            <i class="fa-solid fa-angles-right"></i>
-          </a>
-        </li>
+      <li class="page-item disabled">
+        <a class="page-link" tabindex='-1' aria-disabled="true" href="#">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </li>
+      <li class="page-item disabled">
+        <a href="?page={{ sell_list.paginator.num_pages }}" class="page-link">
+          <i class="fa-solid fa-angles-right"></i>
+        </a>
+      </li>
       {% endif %}
-
+      
     </ul>
     <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary">글 작성</a>
   </div>
+</div>
+
 {% endblock content %}
