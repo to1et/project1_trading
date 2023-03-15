@@ -1,30 +1,73 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block style %}
+  <link rel="stylesheet"   href="{% static 'summernote-bs4.min.css' %}">
+{% endblock style %}
+
+{% block script %}
+<script src="{% static 'summernote-ko-KR.min.js' %}"></script>
+<script src="{% static 'summernote-bs4.min.js' %}"></script>
+
+<script>
+  $(function(){
+    $('#id_content').summernote({
+        height: 300,
+    });
+  });
+  </script>
+{% endblock script %}
+
+
+
+
+
 {% block content %}
-  <div class="container">
-    <h5 class="my-3 border-bottom pb-2">게시글 작성</h5>
-    <form method="post" class="post-form my-3">
-      {% csrf_token %}
-      <!-- 오류표시 Start -->
-      {% if form.errors %}
-        <div class="alert alert-danger" role="alert">
-          {% for field in form %}
-            {% if field.errors %}
-              <strong>{{ field.label }}</strong>
-              {{ field.errors }}
-            {% endif %}
+  <h5 class='my-3 border-bottom pb-2'>
+    <i class="fa-solid fa-pen-to-square"></i>
+    게시글 작성</h5>
+  <form method="post" class="post-form my-3">
+    {% csrf_token %}
+    
+    {% bootstrap_form form %}
+    {% comment %} {{ form.as_p}} {% endcomment %}
+    {% comment %} {% if form.errors %}
+      <div class="alert alert-danger" role="alert">
+        {% for field in form %}
+          {% if field.errors %}
+            <strong>{{ field.label }}</strong>
+            {{ field.errors }}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="form-group">
+      <label for="id_subject">제목</label>
+      <input type="text" class="form-control" name="subject" id="id_subject" value="{{ form.subject.value|default_if_none:'' }}">
+      {% if form.subject.errors %}
+        <div class="text-danger">
+          {% for error in form.subject.errors%}
+            <div>
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              {{error}}
+            </div>
           {% endfor %}
         </div>
       {% endif %}
-      <!-- 오류표시 End -->
-      <div class="form-group">
-        <label for="subject">제목</label>
-        <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:'' }}">
-      </div>
-      <div class="form-group">
-        <label for="content">내용</label>
-        <textarea class="form-control" name="content" id="content" rows="10">{{form.content.value|default_if_none:''}}</textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">저장하기</button>
-    </form>
-  </div>
-{% endblock %}
+    </div>
+    <div class="form-group">
+      <label for="content">내용</label>
+      <textarea class="form-control" name="content" id="content" rows="10">{{form.content.value|default_if_none:''}}</textarea>
+
+    </div> {% endcomment %}
+
+    <button type="submit" class="btn btn-primary">저장하기</button>
+    <a href="{% url 'joonggo:index' %}" class="btn btn-primary">
+      <i class="fa-solid fa-list"></i>
+      목록으로
+    </a>
+  </form>
+
+{% endblock content %}

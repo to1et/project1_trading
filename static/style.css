@@ -16,7 +16,7 @@ input[type=submit] {
 
 .comment {
     border-top:dotted 1px #ddd;
-    font-size:0.7em;
+    font-size:0.8em;
 }
 
 .avatar {
@@ -27,6 +27,6 @@ input[type=submit] {
 }
 
 .sellpic {
-    width: 197px;
-    height: 197px;
+    height: 100%;
+    width: 100%;
 }
