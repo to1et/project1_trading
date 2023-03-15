@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import base_views, sell_views, comment_views, vote_views
 
-
+# url 추가해야 할것 있음.
 app_name = 'joonggo'
 
 urlpatterns = [

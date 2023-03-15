@@ -87,7 +87,7 @@
     </div>
     {% endfor %}
 
-    <form action="{% url 'joonggo:comment_create' sell.id %}" method="post" class="my-3">
+    <form action="{% url 'joonggo:comment_create_sell' sell.id %}" method="post" class="my-3">
         {% csrf_token %}
 
         {% if form.errors %}
