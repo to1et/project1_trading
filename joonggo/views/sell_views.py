@@ -20,6 +20,10 @@ def sell_create(request):
         if form.is_valid():
             sell = form.save(commit=False)
             sell.author = request.user
+            sell.price = request.POST.get('price')
+            sell.tmethod = request.POST.get('tmethod')
+            sell.category = request.POST.get('category')
+            sell.images = request.FILES['images']
             sell.create_date = timezone.now()
             sell.save()
             return redirect('joonggo:index')
@@ -44,6 +48,12 @@ def sell_modify(request, sell_id):
         if form.is_valid():
             sell = form.save(commit=False)
             sell.author = request.user
+            """
+            sell.price = request.POST.get('price')
+            sell.tmethod = request.POST.get('tmethod')
+            sell.category = request.POST.get('category')
+            sell.images = request.FILES['images']
+            """
             sell.modify_date = timezone.now()
             sell.save()
             return redirect('joonggo:detail', sell_id=sell.id)
