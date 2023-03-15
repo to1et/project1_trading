@@ -59,9 +59,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-    BASE_DIR / 'templates'
-        ],
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -146,3 +144,5 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 SUMMERNOTE_CONFIG = {
     'attachment_filesize_limit': 5 * 1024 * 1024
 }
+
+AUTH_USER_MODEL = 'common.User'
