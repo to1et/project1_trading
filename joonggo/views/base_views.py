@@ -21,10 +21,8 @@ def index(request):
         sell_list = sell_list.filter(
             Q(subject__icontains=kw) | #제목 검색
             Q(content__icontains=kw) | #내용 검색
-            Q(author__username__icontains=kw)
+            Q(author__nickname__icontains=kw) #유저 닉네임 검색
         ).distinct()
-        print('===========>', kw)
-        print(sell_list[0].content)
 
    
     paginator = Paginator(sell_list, 12)

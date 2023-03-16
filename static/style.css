@@ -67,3 +67,12 @@ input[type=submit] {
     border: none;
     width: 3%;
 }
+
+footer {
+    position: relative;
+}
+
+#wrapper{
+    position: relative;
+    height: 1000px;
+}

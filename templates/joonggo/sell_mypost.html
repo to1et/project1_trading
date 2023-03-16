@@ -28,12 +28,7 @@
     </div>
   </div>
   
-  <div class="col-8 mr-3">
-    <table class="table">
-
-      <tbody>
-        
-
+  <div class="col-8 mr-3" style="height: auto;">
         <!-- 게시판 카드형식 만들기 -->
         <div class="container">
           <div class="row justify-content-center my-3">
@@ -60,7 +55,9 @@
                         </span>
                       {% endif %}
                   </a>
-                  {% comment %} <p class="">{{ sell.price }}</p> {% endcomment %}
+                  <div style="font-weight:600;">
+                    {{sell.price|intcomma}}원
+                  </div>
                   <p class="small"><img class="avatar" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg"> {{ sell.author.nickname }}
                   </p>
                   {% if sell.voter.all.count >= 0 %}
@@ -72,7 +69,10 @@
                   {% endif %}
                 </span>
               {% endif %}
-                  
+              <div>
+                작성일:{{ sell.create_date|date:'Y-m-d H:i' }}
+              </div>
+    
                 </div>
               </div>
             </div>
@@ -83,12 +83,10 @@
 
           </div>
         </div>
-      </tobody>
-    </table>
-    {% include 'joonggo/pagenation.html' %}
     <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary">글 작성</a>
   </div>
 </div>
+{% include 'joonggo/pagenation.html' %}
 
 <form id="searchForm" method="get" action="{% url 'index' %}">
   <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
