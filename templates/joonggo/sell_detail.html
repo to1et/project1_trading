@@ -1,71 +1,112 @@
 {% extends 'base.html' %}
-
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
-
+<!--메세지 뭐시기 지움-->
 {% block content %}
-  <div class="container my-3">
-    {% if messages %}
-    <div class="alert alert-danger my-3" role="alert">
-      {% for message in messages %}
-      <strong>{{ message.tags }}</strong>
-      <ul><li>{{ message.message}}</li></ul>
-      {% endfor %}
-    </div>
-    {% endif %}
-    
+<div class="container my-3">
     <h2 class="border-bottom py-2">{{ sell.subject }}</h2>
-    <div class="row my-3">
-      <div class="col-1">
-        <div class="bg-light text-center p-3 border font-weight-bolder mb-1">
-          {{ sell.voter.count }}</div>
-        <a href="#" data-uri="{% url 'joonggo:vote_sell' sell.id %}" class="recommend btn btn-sm btn-secondary btn-block my-1">좋아요</a>
-        </div>
-      <div class="col-11">
-        {% comment %} 가격 : <span class="price" style="white-space: pre-line;">{{ sell.price }}</span> {% endcomment %}
-        <div class="card">
-          {% autoescape off %}
-          <div class="card-text" style="white-space: pre-line;">{{ sell.content }}</div>
-          {% endautoescape %}
-          
-          <div class="d-flex justify-content-end">
-            <div class="badge badge-light p-2 text-left">
-              <div class="mb-2">{{ sell.author.username }}</div>
-              <div>{{ sell.create_date|date:"Y-m-d H:i" }}</div>
-            </div>
-          </div>
-        </div>
-        {% if request.user == sell.author %}
-        <div class="my-3" align="right">
-          <a href="{% url 'joonggo:sell_modify' sell.id %}" class="btn btn-sm btn-outline-secondary">수정</a>
-          <a href="#" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'joonggo:sell_delete' sell.id %}">삭제</a>
-        </div>
-        {% endif %}
-        {% if sell.comment_set.count > 0 %}
-        <div class="mt-3">
-        {% for comment in sell.comment_set.all %}
-          <div class="comment py-2">
-            <span style="white-space: pre-line;">{{ comment.content }}</span>
-            <span>
-              - {{ comment.author }}, {{ comment.create_date }}
-              {% if comment.modify_date %}
-              (수정: {{ comment.modify_date }})
-              {% endif %}
-            </span>
-            {% if request.user == comment.author %}
-              <a href="{% url 'joonggo:comment_modify_sell' comment.id %}" class="small">수정</a>
-              <a href="#" class="small delete" data-uri="{% url 'joonggo:comment_delete_sell' comment.id %}">삭제</a>
+
+    <table class="table_st">
+        <tr>
+          <td rowspan="4" align="center" style="vertical-align:middle; background-color:white; width:37%;">
+            {% if sell.images %}
+                <img src="{{ sell.images.url }}" width="360" height="250">
+            {% else %}
+                <small>대표 이미지가 존재하지 않습니다.</small>
             {% endif %}
-          </div>
+        </td>
+          <td class="none_border">&nbsp;</td>
+          <td class="boldgray">카테고리</td>
+          <td>
+            {{ sell.category }}
+          </td>
+        </tr>
+        <tr>
+          <td class="none_border">&nbsp;</td>
+          <td class="boldgray">판매 가격</td>
+          <td>
+            {% load humanize %}
+            {{ sell.price|intcomma }} 원
+          </td>
+        </tr>
+        <tr>
+          <td class="none_border">&nbsp;</td>
+          <td class="boldgray">거래 방식</td>
+          <td>
+              {{ sell.tmethod }}
+          </td>
+        </tr>
+        <tr>
+          <td class="none_border">&nbsp;</td>
+          <td class="boldgray">판매자 정보</td>
+          <td>
+            <ul class="list-group list-group-flush" style="margin-left:-18px;">
+                <li class="list-group-item">이름: </li>
+                <li class="list-group-item">연락처: </li>
+                <li class="list-group-item">거래 희망 장소: </li>
+            </ul>
+          </td>
+        </tr>
+    </table>
+    <div class="card" style='margin-bottom:15px; margin-top:10px; background-color:whitesmoke;'>
+      <div class="card-body">
+        <h6><b>※ 거래시 필독 사항</b></h6>
+        <ul style="list-style-type:square;">
+          <li>joonggo은 통신판매의 당사자가 아니며 상품정보, 거래에 관한 의무와 책임은 판매자와 구매자에게 있습니다.</li>
+          <li>등록한 게시글이 회원의 신고를 받거나 이상거래로 모니터링 될 경우 사기통합조회 DB로 수집/활용될 수 있습니다.</li>
+          <li>사기피해사례 조회 및 신고는 <a href="https://thecheat.co.kr/rb/?mod=_search" target='_blank'>더치트</a>에서 확인해주세요.</li>  
+        </ul>
+      </div>
+    </div>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">
+                {{ sell.content|safe }}
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="badge badge-light p-2">
+                    {{ sell.create_date }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <h5 class="border-bottom my-3 py-2">
+        댓글 <b>{{sell.comment_set.count}}</b>
+    </h5>
+
+    {% for comment in sell.comment_set.all %}
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">
+                {{ comment.content }}
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="badge badge-light p-2">
+                    {{ comment.create_date }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <form action="{% url 'joonggo:comment_create_sell' sell.id %}" method="post" class="my-3">
+        {% csrf_token %}
+
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+        {% for field in form %}
+            {% if field.errors %}
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+            {% endif %}
         {% endfor %}
         </div>
         {% endif %}
-        <div>
-          <a href="{% url 'joonggo:comment_create_sell' sell.id %}"
-          class="small"><small>댓글 달기</small></a>
-        </div>
-    </div>
 
+        <div class="form-group">
+        <textarea name="content" id="content" class="form-control" rows="4"></textarea>
+        </div>
+        <input type="submit" value="답변등록" class="btn btn-primary" style="float:right; margin-bottom:30px;">
+    </form>
+</div>
 {% endblock content %}
 
 {% block script %}
@@ -75,8 +116,8 @@
     let btns = $('.delete') // 변수 선언 키워드 let
     btns.on('click', function () { // .on('이벤트이름', 이벤트핸들러)
       console.log('click 발생');
-      let answer = confirm('정말 삭제할까요?');
-      if (answer) {
+      let comment = confirm('정말 삭제할까요?');
+      if (comment) {
         location.href = $(this).data('uri'); // this: click이벤트를 발생한 인스턴스에 대한 참조
       }
     }); // 변수 선언 키워드 let

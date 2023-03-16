@@ -1,73 +1,175 @@
 {% extends 'base.html' %}
-{% load static %}
-
-{% load bootstrap4 %}
-
-{% block style %}
-  <link rel="stylesheet"   href="{% static 'summernote-bs4.min.css' %}">
-{% endblock style %}
-
-{% block script %}
-<script src="{% static 'summernote-ko-KR.min.js' %}"></script>
-<script src="{% static 'summernote-bs4.min.js' %}"></script>
-
-<script>
-  $(function(){
-    $('#id_content').summernote({
-        height: 300,
-    });
-  });
-  </script>
-{% endblock script %}
-
-
-
-
 
 {% block content %}
-  <h5 class='my-3 border-bottom pb-2'>
-    <i class="fa-solid fa-pen-to-square"></i>
-    게시글 작성</h5>
-  <form method="post" class="post-form my-3">
+<div class="container">
+  <h5 class="my-3 border-bottom pb-2"><b>글쓰기</b></h5>
+  <form method="post" class="post-form my-3" enctype='multipart/form-data'>
     {% csrf_token %}
-    
-    {% bootstrap_form form %}
-    {% comment %} {{ form.as_p}} {% endcomment %}
-    {% comment %} {% if form.errors %}
+
+    <!-- 오류표시 Start -->
+    {% if form.errors %}
       <div class="alert alert-danger" role="alert">
-        {% for field in form %}
-          {% if field.errors %}
-            <strong>{{ field.label }}</strong>
-            {{ field.errors }}
-          {% endif %}
-        {% endfor %}
+      {% for field in form %}
+        {% if field.errors %}
+        <strong>{{ field.label }}</strong>
+        {{ field.errors }}
+        {% endif %}
+      {% endfor %}
       </div>
     {% endif %}
+    <!-- 오류표시 End -->
+
     <div class="form-group">
-      <label for="id_subject">제목</label>
-      <input type="text" class="form-control" name="subject" id="id_subject" value="{{ form.subject.value|default_if_none:'' }}">
-      {% if form.subject.errors %}
-        <div class="text-danger">
-          {% for error in form.subject.errors%}
-            <div>
-              <i class="fa-solid fa-triangle-exclamation"></i>
-              {{error}}
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
+      <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:'' }}" placeholder="제목을 입력하세요.">
     </div>
     <div class="form-group">
-      <label for="content">내용</label>
-      <textarea class="form-control" name="content" id="content" rows="10">{{form.content.value|default_if_none:''}}</textarea>
+      <table class="table_st">
+        <tr>
+          <td rowspan="4" align="center" style="vertical-align:middle; width:37%;">
+            <img id="previewImg" class='upload' width="360px" height="200px" alt="여기를 클릭해 대표 이미지를 등록해주세요."/>
+            <input type="file" class='real-upload' id="fileUpload" name="images" accept="image/*" style="float:right; display:none;" required>
+          </td>
+          <td class="none_border">&nbsp;</td>
+          <td class="boldgray">카테고리</td>
+          <td>
+            <div>
+                <select class="form-control" id="exampleFormControlSelect1"  name="category" required>
+                  <option selected>카테고리를 선택하세요.</option>
+                  <option value="가전제품">가전제품</option>
+                  <option value="전자기기">전자기기</option>
+                  <option value="의류">의류</option>
+                  <option value="잡화">잡화</option>
+                  <option value="무료 나눔">무료 나눔</option>
+                </select>
+              </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="none_border">&nbsp;</td>
+          <td class="boldgray">판매 가격</td>
+          <td>
+            <input type="number" min='3000' max='100000000' style="width:50%;" name='price' id='price' required></input>&nbsp;원
+          </td>
 
-    </div> {% endcomment %}
-
-    <button type="submit" class="btn btn-primary">저장하기</button>
-    <a href="{% url 'joonggo:index' %}" class="btn btn-primary">
-      <i class="fa-solid fa-list"></i>
-      목록으로
-    </a>
+        </tr>
+        <tr>
+          <td class="none_border">&nbsp;</td>
+          <td class="boldgray">거래 방식</td>
+          <td>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-outline-secondary active">
+                <input type="radio" name="tmethod" id="option1" value="택배 및 직거래" checked> 택배/직거래
+              </label>
+              <label class="btn btn-outline-secondary">
+                <input type="radio" name="tmethod" id="option2" value="택배 거래"> 택배 거래
+              </label>
+              <label class="btn btn-outline-secondary">
+                <input type="radio" name="tmethod" id="option3" value="직거래"> 직거래
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="none_border">&nbsp;</td>
+          <td class="boldgray">판매자 정보</td>
+          <td>
+            <ul class="list-group list-group-flush" style="margin-left:-18px;">
+                <li class="list-group-item">이름: </li>
+                <li class="list-group-item">연락처: </li>
+                <li class="list-group-item">거래 희망 장소: </li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="card" style='margin-bottom:15px; background-color:whitesmoke;'>
+      <div class="card-body">
+        <h6><b>※ 거래시 필독 사항</b></h6>
+        <ul style="list-style-type:square;">
+          <li>Trading은 통신판매의 당사자가 아니며 상품정보, 거래에 관한 의무와 책임은 판매자와 구매자에게 있습니다.</li>
+          <li>등록한 게시글이 회원의 신고를 받거나 이상거래로 모니터링 될 경우 사기통합조회 DB로 수집/활용될 수 있습니다.</li>
+          <li>사기피해사례 조회 및 신고는 <a href="https://thecheat.co.kr/rb/?mod=_search" target='_blank'>더치트</a>에서 확인해주세요.</li>  
+        </ul>
+      </div>
+    </div>
+    <div class="form-group">
+      <textarea class="form-control" name="content" id="summernote">{{form.content.value|default_if_none:''}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" style="float:right">저장하기</button>
   </form>
+</div>
+{% endblock %}
 
-{% endblock content %}
+{% block script %}
+<script>
+  // 대표 이미지 등록 스크립트 
+  const fileInput = document.getElementById("fileUpload");
+
+  const handleFiles = (e) => {
+    const selectedFile = [...fileInput.files];
+    const fileReader = new FileReader();
+
+    fileReader.readAsDataURL(selectedFile[0]);
+
+    fileReader.onload = function () {
+      document.getElementById("previewImg").src = fileReader.result;
+    };
+  };
+
+  fileInput.addEventListener("change", handleFiles);
+
+  // 대표 이미지 type:file 숨기기
+  const realUpload = document.querySelector('.real-upload');
+  const upload = document.querySelector('.upload');
+  upload.addEventListener('click', () => realUpload.click());
+
+  // 뒤로가기 확인
+
+
+  // 써머노트 기능 
+  $('#summernote').summernote({
+    placeholder: '내용을 입력하세요.',
+    lang: "ko-KR",
+    tabsize: 2,
+    height: 700,
+    focus: true,
+    defaultFontName: '바탕체',
+    toolbar: [
+    ['style', ['style']],
+    ['fontname', ['fontname']],
+    ['fontsize', ['fontsize']],
+    ['font style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+    ['color', ['forecolor','color']],
+    ['para', ['ul', 'ol', 'paragraph']],
+    ['table', ['table']],
+    ['insert', ['link', 'picture', 'video']],
+    ['view', ['fullscreen', 'codeview', 'help']],
+  ],
+    defaultFontName:'바탕',
+    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS','맑은 고딕','궁서','굴림','돋음체','바탕'],
+    fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+    popover: {
+        image: [
+          ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+          ['float', ['floatLeft', 'floatRight', 'floatNone']],
+          ['remove', ['removeMedia']]
+        ],
+        link: [
+          ['link', ['linkDialogShow', 'unlink']]
+        ],
+        table: [
+          ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+          ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+        ],
+        air: [
+          ['color', ['color']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['para', ['ul', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture']]
+        ]
+      }
+  });
+
+</script>
+{% endblock script %} 
