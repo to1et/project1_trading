@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 <!--메세지 뭐시기 지움-->
 {% block content %}
+
 <div class="container my-3">
+  
   <h2 class="border-bottom py-2">{{ sell.subject }}</h2>
 
     <div class="mx-auto my-1 clearfix" style="width:98%; ">
@@ -15,14 +17,32 @@
     </div>
 
     <div>
+      
+      
       {% if request.user == sell.author %}
-        <div style="float:right;">
-          <a href="{% url 'joonggo:sell_modify' sell.id %}" class="btn btn-sm btn-outline-secondary text-info">
-            <i class="fa-solid fa-pen-to-square mr-2"></i>수정</a>
+      <div style="float:right;">
+        <a href="{% url 'joonggo:sell_modify' sell.id %}" class="btn btn-sm btn-outline-secondary text-info">
+          <i class="fa-solid fa-pen-to-square mr-2"></i>수정</a>
           <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url 'joonggo:sell_delete' sell.id  %}">
             <i class="fa-regular fa-trash-can"></i>삭제</a>
-        </div>
+          </div>
+          {% endif %}
+          <div style="float:right;">
+      <!-- 추천 영역 -->
+      <div class="bg-light text-center p-3 border font-weight-bolder mb-1">
+        {{ sell.voter.count }}
+      </div>
+      {% if user in sell.voter.all %}
+        <a href="#" data-uri="{% url 'joonggo:vote_sell' sell.id %}" class="recommend btn btn-sm btn-secondary btn-block my-1">
+          <i class="fa-solid fa-heart"></i>
+          추천</a>
+      {% else %}
+        <a href="#" data-uri="{% url 'joonggo:vote_sell' sell.id %}" class="recommend btn btn-sm btn-secondary btn-block my-1">
+          <i class="fa-regular fa-heart"></i>
+          추천</a>
       {% endif %}
+    
+    </div>
     </div>
     <table class="table_st" style="margin-top:50px;">
         <tr>
