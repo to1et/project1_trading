@@ -27,15 +27,7 @@
     </div>
 
     <div>
-      {% if request.user == sell.author %}
       <div style="float:right;">
-        <a href="{% url 'joonggo:sell_modify' sell.id %}" class="btn btn-sm btn-outline-secondary text-info" style="margin-left:4px;">
-          <i class="fa-solid fa-pen-to-square mr-2"></i>수정</a>
-          <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url 'joonggo:sell_delete' sell.id  %}">
-            <i class="fa-regular fa-trash-can"></i>삭제</a>
-          </div>
-          {% endif %}
-          <div style="float:right;">
       <!-- 추천 영역 -->
       {% if request.user in sell.voter.all %}
       <a href="{% url 'joonggo:vote_sell' sell.id %}" data-uri="{% url 'joonggo:vote_sell' sell.id %}" class="btn btn-sm btn-outline-danger text-danger">
@@ -44,9 +36,9 @@
       <a href="{% url 'joonggo:vote_sell' sell.id %}" data-uri="{% url 'joonggo:vote_sell' sell.id %}" class="btn btn-sm btn-outline-secondary text-dark">
           <i class="fa fa-heart-o mr-1"></i>찜</a>
       {% endif %}
+      </div>
+    </div>
     
-    </div>
-    </div>
     <table class="table_st" style="margin-top:50px;">
         <tr>
           <td rowspan="4" align="center" style="vertical-align:middle; background-color:white; width:37%;">
@@ -100,12 +92,27 @@
         </ul>
       </div>
     </div>
-    <div class="card my-3">
+    
+    <div class="card">
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line; margin-top:-30;">
                 {{ sell.content|safe }}
             </div>
         </div>
+      <!-- 해당 게시글 작성자면 수정 / 삭제 가능 -->
+        {% if request.user == sell.author %}
+        <div class="card-footer text-muted">
+          <div style="float:right;">
+            <a href="{% url 'joonggo:sell_modify' sell.id %}" class="btn btn-sm btn-outline-secondary text-info" style="margin-left:4px;">
+              <i class="fa-solid fa-pen-to-square mr-2"></i>수정</a>
+              <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url 'joonggo:sell_delete' sell.id  %}">
+                <i class="fa-regular fa-trash-can"></i>삭제</a>
+          </div>
+        </div>
+        {% endif %}        
+    <div>
+
+    </div>
     </div>
 
     <h5 class="border-bottom my-3 py-2">

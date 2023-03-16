@@ -6,7 +6,7 @@
 
 <div class="row ml-5 my-3">
   <div class="col-2">
-    <div class='card' style="margin-top:75px;" >
+    <div class='card' style="margin-top:75px;">
       <div class="card-body">
         {% if user.is_authenticated %}
         <div class="text-center" style="margin-bottom:20px; margin-top:-10px;">* 회원정보 *</div>
@@ -86,7 +86,7 @@
             {% endfor %}
             {% endif %}
           </div>
-          <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary">글 작성</a>
+          <a href="{% url 'joonggo:sell_create' %}" class="btn btn-dark">글 작성</a>
         </div>
         {% include 'joonggo/pagenation.html' %}
   </div>
