@@ -13,7 +13,7 @@
         <div class="text-center" style="margin-bottom:20px; margin-top:-10px;">* 회원정보 *</div>
         <hr>
         <ul style="list-style-type:none; margin:10px; padding:0px;">
-          <li><img class="avatar" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg"> {{ user.nickname }} 님</li>
+          <li><img class="avatar" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg"> {{ user.nickname }} <small>님</small></li>
           <li><a href="{% url 'common:logout' %}" style="margin-top:10px;">로그아웃</a></li>
         </ul>        
         <hr>
@@ -24,6 +24,7 @@
         </ul>
         {% else %}
         <div class="text-center" style="margin-bottom:20px; margin-top:-10px;">* 회원정보 *</div>
+        <hr>
         <a style="font-size:12px;" class="nav-link text-center" href="{% url 'common:login' %}">로그인이 필요합니다.</a>
         {% endif %}
       </div>

@@ -1,11 +1,11 @@
 from django import forms
-from joonggo.models import Sell, Comment
-from django.contrib.auth.models import User
+from .models import Sell, Comment
+
 
 class SellForm(forms.ModelForm):
     class Meta:
         model = Sell
-        fields = ['subject', 'content', 'price', 'category', 'tmethod']
+        fields = ['subject', 'content', 'price', 'tmethod', 'category', 'images']
 
 class CommentForm(forms.ModelForm):
     class Meta:
