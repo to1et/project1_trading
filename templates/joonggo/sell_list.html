@@ -30,7 +30,7 @@
   
   <div class="col-8 mr-3">
         <!-- 게시판 카드형식 만들기 -->
-        <div class="container">
+        <div class="container" id="wrap">
           <div class="row justify-content-center my-3">
             <div class="col-6 input-group">
               <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}">
@@ -87,10 +87,13 @@
 
           </div>
         </div>
-    <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary">글 작성</a>
+
+        <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary">글 작성</a>
+        {% include 'joonggo/pagenation.html' %}
+
+    
   </div>
 </div>
-{% include 'joonggo/pagenation.html' %}
 
 <form id="searchForm" method="get" action="{% url 'index' %}">
   <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">

@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="row ml-5 my-3">
+<div class="row ml-5 my-3" >
   <div class="col-2">
     <div class='card'>
       <div class="card-body">
@@ -28,10 +28,10 @@
     </div>
   </div>
   
-      <div class="col-8 mr-3" id="wrapper">
+      <div class="col-8 mr-3">
 
         <!-- 게시판 카드형식 만들기 -->
-        <div class="container">
+        <div class="container"id="wrap">
           <div class="row justify-content-center my-3">
             <div class="col-6 input-group">
               <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}">
@@ -83,16 +83,11 @@
             
 
           </div>
-          
         </div>
-
-        <footer>
-
-          <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary">글 작성</a>
-          {% include 'joonggo/pagenation.html' %}
-    
-        </footer>  
-  
+        <div>
+        <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary">글 작성</a>
+        {% include 'joonggo/pagenation.html' %}
+        </div>
       </div>
 </div>
 
