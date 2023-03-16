@@ -48,7 +48,8 @@
             {% if sell_list %}
             {% for sell in sell_list %}
             {% comment %} {% for sell in user.voter_sell.all %} {% endcomment %}
-              <div class="col-3">
+            <!-- 카드 부분 -->
+              <div class="col-xs-3">
                 <div class="card" style="margin: 3px;">
                   <img class="sellpic" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg">
                   <div class="card-body">

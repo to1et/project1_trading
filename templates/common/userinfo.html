@@ -1,28 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-  <div>
-    <div>
-      <div>
-        이메일
+{% comment %} 글자 크기 키우기, 폰트 이쁘게, 설명창과 내용창 나누기, 내 프로필/개인정보 나누기. {% endcomment %}
+  <div class="account_box">
+    <div class="title">
+      <h2 class="title_text">내 프로필</h2>
+    </div>
+    <ul>
+      <li>
+        <span class="material-symbols-outlined">mark_as_unread</span>
+        이메일 |
         {{ user.email }}
-      </div>
-      <div>
-        닉네임
+      </li>
+      <li>
+        <span class="material-symbols-outlined">person</span>
+        닉네임 |
         {{ user.nickname }}
+      </li>
+    </ul>
+  </div>
+  <div class="account_box">
+      <div class="title">
+        <h2 class="title_text">개인정보</h2>
       </div>
-    </div>
-
-    <div>
-      이름
-      {{ user.username }}
-    </div>
-    <div>
-      전화번호
-      {{ user.phonenumber }}
-    </div>
-    <div>
-      주소
-      {{ user.address }}
-    </div>
+      <ul>
+        <li>
+          <span class="material-symbols-outlined">person</span>
+          이름 |
+          {{ user.username }}
+        </li>
+        <li>
+          <span class="material-symbols-outlined">phone_android</span>
+          전화번호 |
+          {{ user.phonenumber }}
+        </li>
+        <li>
+          <span class="material-symbols-outlined">home</span>
+          주소 |
+          {{ user.address }}
+        </li>
+      </ul>
   </div>
 {% endblock content %}

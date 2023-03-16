@@ -43,7 +43,7 @@ class User(AbstractUser):
     nickname = models.CharField(max_length=24, default=None,  unique=True)
     username = models.CharField(max_length=24, default=None)
     profile_image = models.TextField(default=None, null=True, blank=True)
-    phonenumber = models.IntegerField(default=None, unique=True)
+    phonenumber = models.TextField(default=None, unique=True)
     address = models.TextField(default=None)
     is_superuser = models.BooleanField(default=False)
 
