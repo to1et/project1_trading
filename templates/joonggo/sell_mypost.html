@@ -61,18 +61,21 @@
                   </div>
                   <p class="small"><img class="avatar" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg"> {{ sell.author.nickname }}
                   </p>
-                  {% if sell.voter.all.count >= 0 %}
-                  찜<span class="text-danger px-2 py-1">
-                  {% if user in sell.voter.all %}
-                  <i class="fa-solid fa-heart"></i>
-                  {% else %}
-                  <i class="fa-regular fa-heart"></i>
-                  {% endif %}
+                    <div style="margin-left:-8px; margin-bottom:3px;">
+                    {% if sell.voter.all.count >= 0 %}
+                    <span class="text-danger px-2 py-1">
+                    {% if user in sell.voter.all %}
+                    <i class="fa-solid fa-heart"></i>
+                    {% else %}
+                    <i class="fa-regular fa-heart"></i>
+                    {% endif %}
+                    {{ sell.voter.count }}
+                    </div>
                 </span>
               {% endif %}
-              <div>
-                작성일:{{ sell.create_date|date:'m-d H:i' }}
-              </div>
+                    <div style="margin-bottom:-7px;">
+                      <small>작성일ㅣ {{ sell.create_date|date:'m-d H:i' }}</small>
+                    </div>
     
                 </div>
               </div>
@@ -84,7 +87,7 @@
 
           </div>
         </div>
-    <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary" style="float:right;">글 작성</a>
+    <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary">글 작성</a>
     {% include 'joonggo/pagenation.html' %}
   </div>
 </div>

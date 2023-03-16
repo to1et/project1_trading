@@ -2,8 +2,18 @@
 <!--메세지 뭐시기 지움-->
 {% block content %}
 
+  {% if messages %}
+    <div class="alert alert-danger my-3" role="alert">
+      {% for message in messages %}
+        <strong>{{ message.tags }}</strong>
+        <ul>
+          <li>{{ message.message }}</li>
+        </ul>
+      {% endfor %}
+    </div>
+  {% endif %}
+
 <div class="container my-3">
-  
   <h2 class="border-bottom py-2">{{ sell.subject }}</h2>
 
     <div class="mx-auto my-1 clearfix" style="width:98%; ">
