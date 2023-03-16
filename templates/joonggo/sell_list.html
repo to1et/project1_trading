@@ -48,12 +48,12 @@
             {% if sell_list %}
             {% for sell in sell_list %}
             {% comment %} {% for sell in user.voter_sell.all %} {% endcomment %}
-              <div class="col-3">
+              <div class="col-xs-3">
                 <div class="card" style="margin: 3px;">
                   {% comment %} <img class="sellpic" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg"> {% endcomment %}
                   <img class="sellpic" src="{{ sell.images.url }}">
                   <div class="card-body">
-                    <a class="stretched-link" style="color:black;" href="{% url 'joonggo:detail' sell.id %}">{{ sell.subject }}
+                    <a class="stretched-link" style="color:black;" href="{% url 'joonggo:detail' sell.id %}">{{ sell.subject|truncatechars:10 }}
                       {% if sell.comment_set.count %}
                         <span class="ml-2">
                           <i class="fa-regular fa-comment-dots"></i>
@@ -62,7 +62,7 @@
                       {% endif %}
                     </a>
                     {% comment %} <p class="">{{ sell.price }}</p> {% endcomment %}
-                    <p class="small"><img class="avatar" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg"> {{ sell.author.username }}
+                    <p class="small"><img class="avatar" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg"> {{ sell.author.nickname }}
                     </p>
                     {% if sell.voter.all.count >= 0 %}
                     좋아요<span class="text-danger px-2 py-1">
