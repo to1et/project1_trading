@@ -18,7 +18,7 @@
 
     <div class="mx-auto my-1 clearfix" style="width:98%; ">
       <div style="float:left;">
-        <img class="avatar_1" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg">
+        <img class="avatar_1" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg">
         <a href="#" title="이 회원이 쓴 글 보기"><small>{{ sell.author.nickname }}</small></a>
       </div>
       <div style="float:right;">
@@ -82,9 +82,9 @@
           <td class="boldgray">판매자 정보</td>
           <td>
             <ul class="list-group list-group-flush" style="margin-left:-18px; margin-top:-10px; margin-bottom:-10px;">
-                <li class="list-group-item">이메일 |&nbsp;&nbsp;<small>{{ user.email }}</small></li>
-                <li class="list-group-item">닉네임 |&nbsp;&nbsp;<small>{{ user.nickname }}</small></li>
-                <li class="list-group-item">연락처 |&nbsp;&nbsp;<small>{{ user.phonenumber }}</small></li>
+                <li class="list-group-item">이메일 |&nbsp;&nbsp;<small>{{ sell.author.email }}</small></li>
+                <li class="list-group-item">닉네임 |&nbsp;&nbsp;<small>{{ sell.author.nickname }}</small></li>
+                <li class="list-group-item">연락처 |&nbsp;&nbsp;<small>{{ sell.author.phonenumber }}</small></li>
             </ul>
           </td>
         </tr>

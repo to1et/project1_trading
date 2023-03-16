@@ -6,18 +6,23 @@
 
 <div class="row ml-5 my-3">
   <div class="col-2">
-    <div class='card'>
-      <div class="card-body ">
+    <div class='card' style="margin-top:75px;" >
+      <div class="card-body">
         {% if user.is_authenticated %}
-        <div class="text-center" style="margin-bottom:20px;">* 회원정보 *</div>
-        <img class="avatar" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg"> {{ user.nickname }} 님
+        <div class="text-center" style="margin-bottom:20px; margin-top:-10px;">* 회원정보 *</div>
+        <hr>
+        <ul style="list-style-type:none; margin:10px; padding:0px;">
+          <li><img class="avatar" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg"> {{ user.nickname }} 님</li>
+          <li><a href="{% url 'common:logout' %}" style="margin-top:10px;">로그아웃</a></li>
+        </ul>        
         <hr>
         <ul style="list-style-type:square; margin:10px; padding:0px;">
+          <li><a style="color:black;" href="{% url 'common:userinfo'%}">내 회원 정보</a></li>
           <li><a style="color:black;" href="{% url 'joonggo:sell_mypost' user.id %}">내가 쓴 글 보기</a></li>
           <li><a style="color:black;" href="{% url 'joonggo:sell_mylike' user.id %}">좋아요 한 글 보기</a></li>
         </ul>
         {% else %}
-        <div class="text-center" style="margin-bottom:20px;">* 회원정보 *</div>
+        <div class="text-center" style="margin-bottom:20px; margin-top:-10px;">* 회원정보 *</div>
         <a style="font-size:12px;" class="nav-link text-center" href="{% url 'common:login' %}">로그인이 필요합니다.</a>
         {% endif %}
       </div>
