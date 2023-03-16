@@ -23,7 +23,12 @@ def sell_create(request):
             sell.price = request.POST.get('price')
             sell.tmethod = request.POST.get('tmethod')
             sell.category = request.POST.get('category')
-            sell.images = request.FILES['images']
+
+            try:
+                sell.images = request.FILES['images']
+            except:
+                sell.images = None
+
             sell.create_date = timezone.now()
             sell.save()
             return redirect('joonggo:index')
