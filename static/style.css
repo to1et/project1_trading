@@ -22,8 +22,13 @@ input[type=submit] {
 .avatar {
     width: 30px;
     height: 30px;
-    border-radius: 50%;
-    
+    border-radius: 50%; 
+}
+
+.avatar_1 {
+    width: 22px;
+    height: 22px;
+    border-radius: 30%; 
 }
 
 .sellpic {
@@ -38,6 +43,7 @@ input[type=submit] {
     border-collapse: separate;
   }
   table th, td {
+    border-top: 1px solid rgb(229, 229, 229);
     border-bottom: 1px solid rgb(229, 229, 229);
     padding: 20px;
   }
@@ -58,6 +64,7 @@ input[type=submit] {
 }
 
 .td_st {
+    border-top: 1px solid rgb(229, 229, 229);
     border-bottom: 1px solid rgb(229, 229, 229);
     padding: 10px;
     

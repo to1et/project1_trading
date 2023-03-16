@@ -2,16 +2,29 @@
 <!--메세지 뭐시기 지움-->
 {% block content %}
 <div class="container my-3">
-    <h2 class="border-bottom py-2">{{ sell.subject }}</h2>
+  <h2 class="border-bottom py-2">{{ sell.subject }}</h2>
 
-    <div style="float:left; margin-left:10px; margin-top:-5px;">
-      <a href="#" title="이 회원이 쓴 글 보기"><small>{{ sell.author.nickname }}</small></a>
-    </div>
-    <div style="float:right; margin-top:-5px;">
-      <small>{{ sell.create_date | date:'Y-m-d H:i' }}</small>
+    <div class="mx-auto my-1 clearfix" style="width:98%; ">
+      <div style="float:left;">
+        <img class="avatar_1" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg">
+        <a href="#" title="이 회원이 쓴 글 보기"><small>{{ sell.author.nickname }}</small></a>
+      </div>
+      <div style="float:right;">
+        <small>{{ sell.create_date | date:'Y-m-d H:i' }}</small>
+      </div>
     </div>
 
-    <table class="table_st">
+    <div>
+      {% if request.user == sell.author %}
+        <div style="float:right;">
+          <a href="{% url 'joonggo:sell_modify' sell.id %}" class="btn btn-sm btn-outline-secondary text-info">
+            <i class="fa-solid fa-pen-to-square mr-2"></i>수정</a>
+          <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url 'joonggo:sell_delete' sell.id  %}">
+            <i class="fa-regular fa-trash-can"></i>삭제</a>
+        </div>
+      {% endif %}
+    </div>
+    <table class="table_st" style="margin-top:50px;">
         <tr>
           <td rowspan="4" align="center" style="vertical-align:middle; background-color:white; width:37%;">
             {% if sell.images %}
@@ -20,7 +33,7 @@
                 <img src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg" width="360" height="250">
                 <small>※ 등록된 대표 이미지가 없습니다.</small>
             {% endif %}
-        </td>
+          </td>
           <td class="none_border">&nbsp;</td>
           <td class="boldgray">카테고리</td>
           <td>
@@ -61,7 +74,7 @@
           <li>joonggo은 통신판매의 당사자가 아니며 상품정보, 거래에 관한 의무와 책임은 판매자와 구매자에게 있습니다.</li>
           <li>등록한 게시글이 회원의 신고를 받거나 이상거래로 모니터링 될 경우 사기통합조회 DB로 수집/활용될 수 있습니다.</li>
           <li>판매자가 별도의 결제링크, 직접송금을 유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고 <a href="#" title="고객센터로 이동" rel"noreferrer">고객센터</a>로 신고해주시기 바랍니다.</li>
-          <li>사기피해사례 조회 및 신고는 <a href="https://thecheat.co.kr/rb/?mod=_search" target='_blank' title="더치트로 이동" rel"noreferrer">더치트</a>에서 확인해주세요.</li>  
+          <li>사기피해사례 조회 및 신고는 <a href="https://thecheat.co.kr/rb/?mod=_search" target='_blank' title="더치트로 이동" rel"noreferrer">더치트</a>를 이용해주세요.</li>  
         </ul>
       </div>
     </div>
@@ -73,8 +86,6 @@
         </div>
     </div>
 
-    <div>
-    </div>
     <h5 class="border-bottom my-3 py-2">
         댓글 <b>{{sell.comment_set.count}}</b>
     </h5>
