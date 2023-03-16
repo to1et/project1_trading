@@ -42,7 +42,7 @@
           <div class="row">
             {% if sell_list %}
             {% for sell in sell_list %}
-            <div class="col-xs-3">
+            <div class="col-xs-3 ml-2 mb-3">
               <div href="{% url 'joonggo:detail' sell.id %}" class="card" style="margin: 3px;">
                 {% comment %} <img class="sellpic" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg"> {% endcomment %}
                 <img class="sellpic" src="{{ sell.images.url }}">
