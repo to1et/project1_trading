@@ -11,7 +11,7 @@
       <div class="card-body">
         {% if user.is_authenticated %}
         <div>회원정보</div>
-        <img class="avatar" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg"> {{ user.username }}
+        <img class="avatar" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg"> {{ user.nickname }}
         <div>
           <a style="color:black;" href="{% url 'joonggo:sell_mypost' user.id %}">내가 쓴 글 보기</a>
         </div>
@@ -49,7 +49,8 @@
             {% for sell in sell_list %}
             <div class="col-3">
               <div href="{% url 'joonggo:detail' sell.id %}" class="card" style="margin: 3px;">
-                <img class="sellpic" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg">
+                {% comment %} <img class="sellpic" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg"> {% endcomment %}
+                <img class="sellpic" src="{{ sell.images.url }}">
                 <div class="card-body">
                   <a class="stretched-link" style="color:black;" href="{% url 'joonggo:detail' sell.id %}">{{ sell.subject }}</a>
                   {% comment %} <p class="">{{ sell.price }}</p> {% endcomment %}
@@ -75,6 +76,8 @@
 
           </div>
         </div>
+      </tobody>
+    </table>
     {% include 'joonggo/pagenation.html' %}
     <a href="{% url 'joonggo:sell_create' %}" class="btn btn-primary">글 작성</a>
   </div>
