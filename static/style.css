@@ -32,8 +32,8 @@ input[type=submit] {
 }
 
 .sellpic {
-    height: 100%;
-    width: 100%;
+    height: 250px;
+    width: 250px;
 }
 
   table {
@@ -75,6 +75,7 @@ input[type=submit] {
     width: 3%;
 }
 
+
 .upload {
     border: none;
 }
@@ -91,4 +92,8 @@ a:hover {
 }
 a:active {
   text-decoration: none;
+=======
+#wrap {
+    min-height: 500px;
+
 }
