@@ -22,13 +22,18 @@ input[type=submit] {
 .avatar {
     width: 30px;
     height: 30px;
-    border-radius: 50%;
-    
+    border-radius: 50%; 
+}
+
+.avatar_1 {
+    width: 22px;
+    height: 22px;
+    border-radius: 30%; 
 }
 
 .sellpic {
-    height: 100%;
-    width: 100%;
+    height: 250px;
+    width: 250px;
 }
 
   table {
@@ -38,6 +43,7 @@ input[type=submit] {
     border-collapse: separate;
   }
   table th, td {
+    border-top: 1px solid rgb(229, 229, 229);
     border-bottom: 1px solid rgb(229, 229, 229);
     padding: 20px;
   }
@@ -58,6 +64,7 @@ input[type=submit] {
 }
 
 .td_st {
+    border-top: 1px solid rgb(229, 229, 229);
     border-bottom: 1px solid rgb(229, 229, 229);
     padding: 10px;
     
@@ -67,6 +74,7 @@ input[type=submit] {
     border: none;
     width: 3%;
 }
+
 
 .account_box {
     display: table;
@@ -100,4 +108,25 @@ input[type=submit] {
 
 .material-symbols-outlined {
     margin-top: 10px;
+}
+
+.upload {
+    border: none;
+}
+
+/* <a href> 관련 스타일 */
+a:link {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:active {
+  text-decoration: none;
+
+#wrap {
+    min-height: 500px;
 }

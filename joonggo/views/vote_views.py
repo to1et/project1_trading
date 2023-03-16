@@ -13,6 +13,8 @@ def vote_sell(request, sell_id):
     sell = get_object_or_404(Sell, pk=sell_id)
     if request.user == sell.author:
         messages.error(request, '본인이 작성한 글은 좋아요할 수 없습니다.')
+    elif request.user in sell.voter.all():
+        sell.voter.remove(request.user)
     else:
         sell.voter.add(request.user)
     return redirect('joonggo:detail', sell_id=sell.id)
