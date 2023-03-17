@@ -21,7 +21,9 @@
         <label for="password">비밀번호</label>
         <input type="password" class="form-control" name="password" id="password" value="{{ form.password.value|default_if_none:'' }}">
       </div>
-      <button type="submit" class="btn btn-primary">로그인</button>
+      <button type="submit" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i> 로그인</button>
+      <a href="{% url 'common:signup' %}" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i>
+        회원가입</a>
       
     </form>
   </div>
