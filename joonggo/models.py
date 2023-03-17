@@ -7,8 +7,8 @@ from common.models import User
 class Sell(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_sell')
 
-    subject = models.CharField(max_length=200)
-    content = models.TextField()
+    subject = models.CharField(blank=True, null=True, max_length=200)
+    content = models.TextField(blank=True, null=True)
     images = models.ImageField(blank=True, upload_to='images')
     category = models.TextField(default="") # 카테고리
     price = models.IntegerField(default=0) # 가격

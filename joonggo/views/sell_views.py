@@ -68,6 +68,42 @@ def sell_modify(request, sell_id):
     context = {'form': form}
     return render(request, 'joonggo/sell_form.html', context)
 
+''' 수정하기 할때 글 내용 불러오는거 실패작
+@login_required(login_url='common:login')
+def sell_modify(request, sell_id):
+    """
+    joonggo 작성글 수정
+    
+    """
+    sell = get_object_or_404(Sell, pk=sell_id)
+    if request.user != sell.author:
+        messages.error(request, '수정권한이 없습니다.')
+        return redirect('joonggo:detail', sell_id=sell.id)
+
+    if request.method == "POST":
+        form = SellForm(request.POST, instance=sell)
+        if form.is_valid():
+            sell = form.save(commit=False)
+            sell.author = request.user
+            sell.price = form.cleaned_data['price']
+            sell.tmethod = form.cleaned_data['tmethod']
+            sell.category = form.cleaned_data['category']
+
+            try:
+                sell.images = form.cleaned_data['images']
+            except:
+                sell.images = None
+                
+            sell.modify_date = timezone.now()
+            sell.save()
+            return redirect('joonggo:detail', sell_id=sell.id)
+    else:
+        form = SellForm(instance=sell)
+        context = {'form': form, 'sell':True, 'now':'sell_modify',}
+                   
+    return render(request, 'joonggo/sell_form.html', context)
+'''
+
 @login_required(login_url='common:login')
 def sell_delete(request, sell_id):
     """

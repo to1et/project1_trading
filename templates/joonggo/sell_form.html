@@ -20,21 +20,21 @@
     <!-- 오류표시 End -->
 
     <div class="form-group">
-      <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:'' }}" placeholder="제목을 입력하세요.">
+      <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:'' }}" placeholder="제목을 입력하세요." required>
     </div>
     <div class="form-group">
       <table class="table_st">
         <tr>
           <td rowspan="4" align="center" style="vertical-align:middle; width:37%;">
-            <img id="previewImg" class='upload' width="360px" height="200px" alt="여기를 클릭해 대표 이미지를 등록해주세요."/>
+            <img id="previewImg" class='upload' width="360" height="200" alt="여기를 클릭해 대표 이미지를 삽입해주세요."/>
             <input type="file" class='real-upload' id="fileUpload" name="images" accept="image/*" style="float:right; display:none;">
           </td>
           <td class="none_border">&nbsp;</td>
           <td class="boldgray">카테고리</td>
           <td>
             <div>
-                <select class="form-control" id="exampleFormControlSelect1"  name="category" required>
-                  <option selected>카테고리를 선택하세요.</option>
+                <select class="form-control" id="category"  name="category" required>
+                  <option value="">카테고리를 선택하세요.</option>
                   <option value="가전제품">가전제품</option>
                   <option value="전자기기">전자기기</option>
                   <option value="의류">의류</option>
@@ -73,10 +73,10 @@
           <td class="none_border">&nbsp;</td>
           <td class="boldgray">판매자 정보</td>
           <td>
-            <ul class="list-group list-group-flush" style="margin-left:-18px;">
-                <li class="list-group-item">이메일: <small>{{ user.email }}</small></li>
-                <li class="list-group-item">닉네임: <small>{{ user.nickname }}</small></li>
-                <li class="list-group-item">연락처: <small>{{ user.phonenumber }}</small></li>
+            <ul class="list-group list-group-flush" style="margin-left:-18px; margin-top:-10px; margin-bottom:-10px;">
+                <li class="list-group-item">이메일 |&nbsp;&nbsp;<small>{{ user.email }}</small></li>
+                <li class="list-group-item">닉네임 |&nbsp;&nbsp;<small>{{ user.nickname }}</small></li>
+                <li class="list-group-item">연락처 |&nbsp;&nbsp;<small>{{ user.phonenumber }}</small></li>
             </ul>
           </td>
         </tr>
@@ -99,9 +99,9 @@
       </div>
     </div>
     <div class="form-group">
-      <textarea class="form-control" name="content" id="summernote">{{form.content.value|default_if_none:''}}</textarea>
+      <textarea class="form-control" name="content" id="summernote" required>{{form.content.value|default_if_none:''}}</textarea>
     </div>
-    <button type="submit" class="btn btn-primary" style="float:right; margin-top:-10; margin-bottom:20;">저장하기</button>
+    <button type="submit" class="btn btn-dark" style="float:right; margin-top:-10; margin-bottom:20;">저장하기</button>
   </form>
 </div>
 {% endblock %}

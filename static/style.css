@@ -20,8 +20,8 @@ input[type=submit] {
 }
 
 .avatar {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%; 
 }
 
@@ -129,4 +129,13 @@ a:active {
 }
 #wrap {
     min-height: 500px;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: white;
+    font-weight:bold;
+    background-color: #333;
+    border-color: #444;
+ 
 }
