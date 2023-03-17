@@ -2,13 +2,23 @@
 <!--메세지 뭐시기 지움-->
 {% block content %}
 
+  {% if messages %}
+    <div class="alert alert-danger my-3" role="alert">
+      {% for message in messages %}
+        <strong>{{ message.tags }}</strong>
+        <ul>
+          <li>{{ message.message }}</li>
+        </ul>
+      {% endfor %}
+    </div>
+  {% endif %}
+
 <div class="container my-3">
-  
   <h2 class="border-bottom py-2">{{ sell.subject }}</h2>
 
     <div class="mx-auto my-1 clearfix" style="width:98%; ">
       <div style="float:left;">
-        <img class="avatar_1" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg">
+        <img class="avatar_1" src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg">
         <a href="#" title="이 회원이 쓴 글 보기"><small>{{ sell.author.nickname }}</small></a>
       </div>
       <div style="float:right;">
@@ -17,40 +27,24 @@
     </div>
 
     <div>
-      
-      
-      {% if request.user == sell.author %}
       <div style="float:right;">
-        <a href="{% url 'joonggo:sell_modify' sell.id %}" class="btn btn-sm btn-outline-secondary text-info">
-          <i class="fa-solid fa-pen-to-square mr-2"></i>수정</a>
-          <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url 'joonggo:sell_delete' sell.id  %}">
-            <i class="fa-regular fa-trash-can"></i>삭제</a>
-          </div>
-          {% endif %}
-          <div style="float:right;">
       <!-- 추천 영역 -->
-      <div class="bg-light text-center p-3 border font-weight-bolder mb-1">
-        {{ sell.voter.count }}
-      </div>
-      {% if user in sell.voter.all %}
-        <a href="#" data-uri="{% url 'joonggo:vote_sell' sell.id %}" class="recommend btn btn-sm btn-secondary btn-block my-1">
-          <i class="fa-solid fa-heart"></i>
-          추천</a>
+      {% if request.user in sell.voter.all %}
+      <a href="{% url 'joonggo:vote_sell' sell.id %}" data-uri="{% url 'joonggo:vote_sell' sell.id %}" class="btn btn-sm btn-outline-danger text-danger">
+          <i class="fa-solid fa-heart mr-1"></i>찜</a> 
       {% else %}
-        <a href="#" data-uri="{% url 'joonggo:vote_sell' sell.id %}" class="recommend btn btn-sm btn-secondary btn-block my-1">
-          <i class="fa-regular fa-heart"></i>
-          추천</a>
+      <a href="{% url 'joonggo:vote_sell' sell.id %}" data-uri="{% url 'joonggo:vote_sell' sell.id %}" class="btn btn-sm btn-outline-secondary text-dark">
+          <i class="fa fa-heart-o mr-1"></i>찜</a>
       {% endif %}
-    
+      </div>
     </div>
-    </div>
+
     <table class="table_st" style="margin-top:50px;">
         <tr>
           <td rowspan="4" align="center" style="vertical-align:middle; background-color:white; width:37%;">
             {% if sell.images %}
                 <img src="{{ sell.images.url }}" width="360" height="250">
             {% else %}
-                <img src="https://randomuser.me/api/portraits/men/{{sell.author.id}}.jpg" width="360" height="250">
                 <small>※ 등록된 대표 이미지가 없습니다.</small>
             {% endif %}
           </td>
@@ -79,10 +73,10 @@
           <td class="none_border">&nbsp;</td>
           <td class="boldgray">판매자 정보</td>
           <td>
-            <ul class="list-group list-group-flush" style="margin-left:-18px;">
-                <li class="list-group-item">이메일: <small>{{ sell.author.email }}</small></li>
-                <li class="list-group-item">닉네임: <small>{{ sell.author.nickname }}</small></li>
-                <li class="list-group-item">연락처: <small>{{ sell.author.phonenumber }}</small></li>
+            <ul class="list-group list-group-flush" style="margin-left:-18px; margin-top:-10px; margin-bottom:-10px;">
+                <li class="list-group-item">이메일 |&nbsp;&nbsp;<small>{{ sell.author.email }}</small></li>
+                <li class="list-group-item">닉네임 |&nbsp;&nbsp;<small>{{ sell.author.nickname }}</small></li>
+                <li class="list-group-item">연락처 |&nbsp;&nbsp;<small>{{ sell.author.phonenumber }}</small></li>
             </ul>
           </td>
         </tr>
@@ -98,12 +92,27 @@
         </ul>
       </div>
     </div>
-    <div class="card my-3">
+    
+    <div class="card">
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line; margin-top:-30;">
                 {{ sell.content|safe }}
             </div>
         </div>
+      <!-- 해당 게시글 작성자면 수정 / 삭제 가능 -->
+        {% if request.user == sell.author %}
+        <div class="card-footer text-muted">
+          <div style="float:right; margin-top:-5px; margin-bottom:-5px; margin-right:-10px;">
+            <a href="{% url 'joonggo:sell_modify' sell.id %}" class="btn btn-sm btn-outline-secondary text-info">
+              <i class="fa-solid fa-pen-to-square mr-2"></i>수정</a>
+              <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url 'joonggo:sell_delete' sell.id  %}">
+                <i class="fa-regular fa-trash-can"></i>삭제</a>
+          </div>
+        </div>
+        {% endif %}        
+    <div>
+
+    </div>
     </div>
 
     <h5 class="border-bottom my-3 py-2">
@@ -142,7 +151,7 @@
         <div class="form-group">
         <textarea name="content" id="content" class="form-control" rows="4"></textarea>
         </div>
-        <input type="submit" value="답변등록" class="btn btn-primary" style="float:right; margin-bottom:30px;">
+        <input type="submit" value="답변등록" class="btn btn-dark" style="float:right; margin-bottom:30px;">
     </form>
 </div>
 {% endblock content %}
