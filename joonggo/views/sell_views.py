@@ -52,13 +52,17 @@ def sell_modify(request, sell_id):
         form = SellForm(request.POST, instance=sell)
         if form.is_valid():
             sell = form.save(commit=False)
-            sell.author = request.user
             """
             sell.price = request.POST.get('price')
             sell.tmethod = request.POST.get('tmethod')
             sell.category = request.POST.get('category')
             sell.images = request.FILES['images']
             """
+            try:
+                sell.images = request.FILES['images']
+            except:
+                sell.images = None
+
             sell.modify_date = timezone.now()
             sell.save()
             return redirect('joonggo:detail', sell_id=sell.id)
