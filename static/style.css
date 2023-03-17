@@ -102,6 +102,27 @@ input[type=submit] {
     color: #fff;
 }
 
+.account_box .title2 {
+    display: block;
+    width: 150px;
+    height: auto;
+    margin: 0px 225px;
+    padding: 15px 38px 13px 18px;
+    border-radius: 6px 6px 6px 6px;
+    background-color: #19d297;
+    text-decoration: none;
+}
+
+.account_box .title_text2 {
+    font-size: 22px;
+    line-height: 20px;
+    letter-spacing: -.19px;
+    color: #fff;
+}
+
+
+
+
 .account_box ul {
     list-style: none;
 }

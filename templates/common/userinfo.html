@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-{% comment %} 글자 크기 키우기, 폰트 이쁘게, 설명창과 내용창 나누기, 내 프로필/개인정보 나누기. {% endcomment %}
   <div class="account_box">
     <div class="title">
       <h2 class="title_text">내 프로필</h2>
@@ -39,5 +38,8 @@
           {{ user.address }}
         </li>
       </ul>
+      <a href="{% url 'common:userinfo_modify' %}" class="title2">
+        <h2 class="title_text2">정보 수정</h2>
+      </a>
   </div>
 {% endblock content %}
