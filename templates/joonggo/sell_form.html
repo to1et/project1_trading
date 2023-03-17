@@ -33,7 +33,7 @@
           <td class="boldgray">카테고리</td>
           <td>
             <div>
-                <select class="form-control" id="category"  name="category" required>
+                <select class="form-control" id="category"  name="category" option="{{ form.category.value|default_if_none:'' }}" required>
                   <option value="">카테고리를 선택하세요.</option>
                   <option value="가전제품">가전제품</option>
                   <option value="전자기기">전자기기</option>
@@ -48,7 +48,7 @@
           <td class="none_border">&nbsp;</td>
           <td class="boldgray">판매 가격</td>
           <td>
-            <input type="number" min='3000' max='100000000' style="width:50%;" name='price' id='price' required></input>&nbsp;원
+            <input type="number" min='3000' max='100000000' style="width:50%;" name='price' id='price' value="{{ form.price.value|default_if_none:'' }}" required></input>&nbsp;원
           </td>
 
         </tr>

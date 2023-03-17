@@ -104,9 +104,11 @@
         <div class="card-footer text-muted">
           <div style="float:right; margin-top:-5px; margin-bottom:-5px; margin-right:-10px;">
             <a href="{% url 'joonggo:sell_modify' sell.id %}" class="btn btn-sm btn-outline-secondary text-info">
-              <i class="fa-solid fa-pen-to-square mr-2"></i>수정</a>
-              <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url 'joonggo:sell_delete' sell.id  %}">
-                <i class="fa-regular fa-trash-can"></i>삭제</a>
+              <i class="fa-solid fa-pen-to-square mr-2"></i>수정
+            </a>
+            <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url 'joonggo:sell_delete' sell.id  %}">
+              <i class="fa-regular fa-trash-can"></i>삭제
+            </a>
           </div>
         </div>
         {% endif %}        
@@ -144,9 +146,13 @@
                 {% if request.user == comment.author %}
                 <div style="float:right; margin-bottom:5px; margin-right:10px;">
                   <a href="{% url 'joonggo:comment_modify_sell' sell.id %}" class="btn btn-sm btn-outline-secondary text-info">
-                    <i class="fa-solid fa-pen-to-square mr-2"></i>수정</a>
+                    <i class="fa-solid fa-pen-to-square mr-2"></i>
+                    수정
+                  </a>
                     <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url 'joonggo:comment_delete_sell' sell.id  %}">
-                      <i class="fa-regular fa-trash-can"></i>삭제</a>
+                      <i class="fa-regular fa-trash-can"></i>
+                      삭제
+                    </a>
                 </div>
                 {% endif %}
               </div>

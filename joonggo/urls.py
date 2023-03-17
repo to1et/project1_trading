@@ -13,12 +13,12 @@ urlpatterns = [
     path('comment/delete/sell/<int:comment_id>/', comment_views.comment_delete_sell, name='comment_delete_sell'),
     
 
-    path('question/create/', sell_views.sell_create, name='sell_create'),
-    path('question/modify/<int:sell_id>/', sell_views.sell_modify, name='sell_modify'),
-    path('question/delete/<int:sell_id>/', sell_views.sell_delete, name="sell_delete"),
-    path('question/mypost/<int:sell_id>/', sell_views.sell_mypost, name="sell_mypost"),
-    path('question/mylike/<int:sell_id>/', sell_views.sell_mylike, name="sell_mylike"),
+    path('create/', sell_views.sell_create, name='sell_create'),
+    path('modify/<int:sell_id>/', sell_views.sell_modify, name='sell_modify'),
+    path('delete/<int:sell_id>/', sell_views.sell_delete, name="sell_delete"),
+    path('mypost/<int:sell_id>/', sell_views.sell_mypost, name="sell_mypost"),
+    path('mylike/<int:sell_id>/', sell_views.sell_mylike, name="sell_mylike"),
 
-    path('vote/question/<int:sell_id>/', vote_views.vote_sell, name='vote_sell'),
+    path('vote/<int:sell_id>/', vote_views.vote_sell, name='vote_sell'),
 
 ]
