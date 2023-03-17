@@ -121,7 +121,7 @@
 
     {% for comment in sell.comment_set.all %}
     <div class="card my-3">
-      <div class="card-body">
+      <div class="card-body ml-1">
           <div style="font-size:12px; font-weight:700;">
             <img class="avatar_1" src="https://randomuser.me/api/portraits/men/{{comment.author.id}}.jpg"> {{ comment.author.nickname }}
           </div>
@@ -132,11 +132,11 @@
           
             <div class="d-flex justify-content-between">
               {% if comment.modify_date %}
-              <div style="font-size:13px;" class="ml-3">
+              <div style="font-size:13px;" class="ml-4">
                 {{ comment.modify_date|date:'Y-m-d h:i' }}
               </div>
               {% else %}
-              <div style="font-size:13px;" class="ml-3">
+              <div style="font-size:13px;" class="ml-4">
                 {{ comment.create_date|date:'Y-m-d h:i' }}
               </div>
               {% endif %}
