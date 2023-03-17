@@ -121,17 +121,38 @@
 
     {% for comment in sell.comment_set.all %}
     <div class="card my-3">
-        <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;">
-                {{ comment.content }}
+      <div class="card-body">
+          <div style="font-size:12px; font-weight:700;">
+            <img class="avatar_1" src="https://randomuser.me/api/portraits/men/{{comment.author.id}}.jpg"> {{ comment.author.nickname }}
+          </div>
+          <div class="card-text" style="white-space: pre-line;">
+              {{ comment.content }} 
             </div>
-            <div class="d-flex justify-content-end">
-                <div class="badge badge-light p-2">
-                    {{ comment.create_date }}
+          </div>
+          
+            <div class="d-flex justify-content-between">
+              {% if comment.modify_date %}
+              <div style="font-size:13px;" class="ml-3">
+                {{ comment.modify_date|date:'Y-m-d h:i' }}
+              </div>
+              {% else %}
+              <div style="font-size:13px;" class="ml-3">
+                {{ comment.create_date|date:'Y-m-d h:i' }}
+              </div>
+              {% endif %}
+              <div>
+                {% if request.user == comment.author %}
+                <div style="float:right; margin-bottom:5px; margin-right:10px;">
+                  <a href="{% url 'joonggo:comment_modify_sell' sell.id %}" class="btn btn-sm btn-outline-secondary text-info">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i>수정</a>
+                    <a href="#" class="delete btn btn-sm btn-outline-secondary text-danger" data-uri="{% url 'joonggo:comment_delete_sell' sell.id  %}">
+                      <i class="fa-regular fa-trash-can"></i>삭제</a>
                 </div>
-            </div>
+                {% endif %}
+              </div>
         </div>
     </div>
+    
     {% endfor %}
 
     <form action="{% url 'joonggo:comment_create_sell' sell.id %}" method="post" class="my-3">
